@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import store from "./store";
+import store from "../utils/store";
 
 export default function Home() {
   const router = useRouter();

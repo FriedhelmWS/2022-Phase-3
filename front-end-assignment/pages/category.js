@@ -1,4 +1,4 @@
-import store from "./store";
+import store from "../utils/store";
 
 export default function TestPage() {
   return (
