@@ -6,14 +6,11 @@ const globalSlice = createSlice({
     name: "",
     value: 0,
     category: -1,
+    question: [],
+    answer: "",
+    correct: null,
   },
   reducers: {
-    incremented: (state) => {
-      state.value += 1;
-    },
-    decremented: (state) => {
-      state.value -= 1;
-    },
     addName: (state, action) => {
       state.name = action.payload;
     },
@@ -22,6 +19,24 @@ const globalSlice = createSlice({
     },
     selectCapital: (state) => {
       state.category = 2;
+    },
+    setQuestion: (state, action) => {
+      state.question = action.payload;
+    },
+    setAnswer: (state, action) => {
+      state.answer = action.payload;
+    },
+    answerCorrect: (state) => {
+      state.correct = true;
+    },
+    answerWrong: (state) => {
+      state.correct = false;
+    },
+    resetAnswer: (state) => {
+      state.correct = null;
+    },
+    resetQuestion: (state) => {
+      state.question = [];
     },
   },
 });

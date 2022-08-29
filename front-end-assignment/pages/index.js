@@ -1,8 +1,12 @@
 import { useRouter } from "next/router";
-import store from "../utils/store";
+import { useStore } from "react-redux";
 
 export default function Home() {
   const router = useRouter();
+
+  const store = useStore();
+
+  console.log(store);
 
   return (
     <div className="flex h-screen justify-center items-center">
