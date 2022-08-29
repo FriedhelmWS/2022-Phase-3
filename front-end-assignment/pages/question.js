@@ -96,31 +96,36 @@ export default function QuestionPage() {
       <div className="flex flex-col items-center justify-center h-screen">
         <div className="text-2xl font-bold ">
           {isCorrect === true ? (
-            <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2 text-center md:grid-cols-2">
               <div>Congratulations!</div>
               <div>You are correct!</div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-              <div>Unfortunately, </div>
-              <div>the answer is wrong.</div>
+            <div className="grid grid-cols-1 gap-2 text-center md:grid-cols-2">
+              <div>Unfortunately!</div>
+              <div>The answer is wrong.</div>
             </div>
           )}
         </div>
-        <button
-          onClick={() => {
-            store.dispatch({
-              type: "system/resetAnswer",
-            });
-            store.dispatch({
-              type: "system/resetQuestion",
-            });
-            router.push("/category");
-          }}
-          className="px-4 py-1 mt-5 text-gray-100 bg-gray-500 rounded-md hover:bg-gray-400"
-        >
-          Try Another Question
-        </button>
+        <div className="flex justify-center mt-5">
+          <button
+            onClick={() => {
+              store.dispatch({
+                type: "system/resetAnswer",
+              });
+              store.dispatch({
+                type: "system/resetQuestion",
+              });
+              router.push("/category");
+            }}
+            className="absolute z-40 px-6 py-3 text-xl font-semibold text-white bg-gray-500 rounded-lg shadow-inner hover:mt-1 active:mt-2"
+          >
+            Try Another Question
+          </button>
+          <div className="px-6 py-3 mt-2 text-xl font-semibold text-white bg-gray-600 rounded-lg">
+            Try Another Question
+          </div>
+        </div>
       </div>
     );
   }
@@ -129,7 +134,7 @@ export default function QuestionPage() {
     <div>
       {question.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-screen">
-          <div className="flex items-center justify-center bg-red-500 w-72 h-72 animate-spin">
+          <div className="flex items-center justify-center bg-gray-500 w-72 h-72 animate-spin">
             <div className="w-56 h-56 bg-white" />
           </div>
         </div>
@@ -153,7 +158,7 @@ export default function QuestionPage() {
               {questionType === 1 ? (
                 <img className="h-48 border" src={question[0]} />
               ) : (
-                <div>{question[0]}</div>
+                <div className="hover:animate-pulse">{question[0]}</div>
               )}
             </button>
             <button
@@ -167,7 +172,7 @@ export default function QuestionPage() {
               {questionType === 1 ? (
                 <img className="h-48 border" src={question[1]} />
               ) : (
-                <div>{question[1]}</div>
+                <div className="hover:animate-pulse">{question[1]}</div>
               )}
             </button>
             <button
@@ -181,7 +186,7 @@ export default function QuestionPage() {
               {questionType === 1 ? (
                 <img className="h-48 border" src={question[2]} />
               ) : (
-                <div>{question[2]}</div>
+                <div className="hover:animate-pulse">{question[2]}</div>
               )}
             </button>
           </div>

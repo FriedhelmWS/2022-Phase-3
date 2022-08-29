@@ -9,10 +9,10 @@ export default function Home() {
   console.log(store);
 
   return (
-    <div className="flex h-screen justify-center items-center">
+    <div className="flex items-center justify-center h-screen">
       <div className="text-center">
         <h1 className="text-3xl">Welcome to the Country Quiz Platform!</h1>
-        <p className="text-xl mt-2">
+        <p className="mt-2 text-xl">
           You would have chance to get test on your country knowledge!
         </p>
         <div className="flex justify-center gap-5 mt-5">
@@ -27,12 +27,17 @@ export default function Home() {
             }
           />
         </div>
-        <button
-          onClick={() => router.push("/category")}
-          className="bg-gray-500 mt-2 px-4 py-1 text-gray-100 rounded-md hover:bg-gray-400"
-        >
-          Continue
-        </button>
+        <div className="flex justify-center mt-5">
+          <button
+            onClick={() => router.push("/category")}
+            className="absolute z-40 px-6 py-3 text-xl font-semibold text-white bg-gray-500 rounded-lg shadow-inner hover:mt-1 active:mt-2"
+          >
+            Continue
+          </button>
+          <div className="px-6 py-3 mt-2 text-xl font-semibold text-white bg-gray-600 rounded-lg">
+            Continue
+          </div>
+        </div>
       </div>
     </div>
   );

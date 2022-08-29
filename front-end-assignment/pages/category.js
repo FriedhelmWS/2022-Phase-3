@@ -6,7 +6,7 @@ export default function CategoryPage() {
   const store = useStore();
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <div className="text-2xl text-center">
+      <div className="text-2xl font-bold text-center text-gray-800">
         Hello, {store.getState().name}! Please select a question category
       </div>
       <div className="grid grid-cols-1 gap-5 mt-5 md:grid-cols-2">
