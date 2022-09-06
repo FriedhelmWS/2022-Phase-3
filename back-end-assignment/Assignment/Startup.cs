@@ -19,7 +19,6 @@ namespace Assignment
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(
@@ -30,6 +29,8 @@ namespace Assignment
                                             .AllowAnyMethod();
                     });
             });
+            services.AddControllers();
+            
 
             services.AddHttpClient(Configuration["CountryClientName"], configureClient: client =>
             {
@@ -45,10 +46,6 @@ namespace Assignment
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
             app.UseCors(builder =>
             {
                 builder
@@ -56,6 +53,12 @@ namespace Assignment
                 .AllowAnyMethod()
                 .AllowAnyHeader();
             });
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            
 
             app.UseAuthentication();
             app.UseAuthorization();
