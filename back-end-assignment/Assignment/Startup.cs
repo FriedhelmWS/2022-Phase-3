@@ -20,7 +20,16 @@ namespace Assignment
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("https://localhost:3000")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                    });
+            });
 
             services.AddHttpClient(Configuration["CountryClientName"], configureClient: client =>
             {
@@ -40,11 +49,13 @@ namespace Assignment
 
             app.UseRouting();
 
-            app.UseCors(x => x
+            app.UseCors(builder =>
+            {
+                builder
+                .AllowAnyOrigin()
                 .AllowAnyMethod()
-                .AllowAnyHeader()
-                .SetIsOriginAllowed(origin => true) // allow any origin
-                .AllowCredentials());
+                .AllowAnyHeader();
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();
