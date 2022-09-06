@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useRouter } from "next/router";
 import { useStore } from "react-redux";
 
@@ -5,8 +6,6 @@ export default function Home() {
   const router = useRouter();
 
   const store = useStore();
-
-  console.log(store);
 
   return (
     <div className="flex items-center justify-center h-screen">
@@ -29,7 +28,25 @@ export default function Home() {
         </div>
         <div className="flex justify-center mt-5">
           <button
-            onClick={() => router.push("/category")}
+            onClick={() => {
+              router.push("/category");
+              axios
+                .get(
+                  "https://msa-2022-owen.azurewebsites.net/weatherforecast",
+                  {
+                    header: {
+                      "Access-Control-Allow-Headers": "*",
+                      "Access-Control-Allow-Origin": "*",
+                      "Access-Control-Allow-Methods": "*",
+                    },
+
+                    // put the rest of your config here
+                  }
+                )
+                .then(function (response) {
+                  console.log(response);
+                });
+            }}
             className="absolute z-40 px-6 py-3 text-xl font-semibold text-white bg-gray-500 rounded-lg shadow-inner hover:mt-1 active:mt-2"
           >
             Continue

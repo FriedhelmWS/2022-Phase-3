@@ -19,6 +19,9 @@ const answers = [
   "Egypt",
   "South Africa",
   "Ethiopia",
+  "Canada",
+  "Spain",
+  "Panama",
 ];
 
 export default function QuestionPage() {
