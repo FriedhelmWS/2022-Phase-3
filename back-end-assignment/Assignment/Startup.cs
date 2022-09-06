@@ -43,7 +43,8 @@ namespace Assignment
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .AllowCredentials();
+                .AllowCredentials()
+                .WithOrigins("http://localhost:3000");
             });
 
             app.UseHttpsRedirection();
