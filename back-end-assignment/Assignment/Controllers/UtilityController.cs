@@ -121,7 +121,7 @@ namespace Assignment.Controllers
         }
 
         [HttpPost]
-        [Route("corrrect")]
+        [Route("wrong")]
         [ProducesResponseType(200)]
         public IActionResult DoingWrong(String name)
         {
