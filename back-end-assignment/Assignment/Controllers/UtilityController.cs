@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Assignment.Data;
+using Assignment.Dtos;
+using Microsoft.AspNetCore.Mvc;
 using System;
 
 
@@ -11,6 +13,13 @@ namespace Assignment.Controllers
     [Route("[controller]")]
     public class UtilityController : ControllerBase
     {
+
+        private readonly IWebAPIRepo _repo;
+
+        public UtilityController(IWebAPIRepo repo)
+        {
+            _repo = repo;
+        }
 
         public static string[] emojis = { "😀", "😅", "😠", "😕", "😧" };
 
@@ -54,6 +63,83 @@ namespace Assignment.Controllers
         { 
             emojis = emojis.Concat(new String[] { emoji }).ToArray(); ;
             return Created(new Uri("https://www.google.com"), "Emoji Added!");
+        }
+
+        [HttpGet("list_players")]
+        public ActionResult<IEnumerable<Player>> GetCustomers()
+        {
+            var res = _repo.GetPlayers();
+            var c = res.Select(e => new PlayerOutDto { Id = e.Id, Name = e.Name, Xp = e.Xp });
+            return Ok(c);
+        }
+
+        [HttpGet]
+        [Route("login")]
+        [ProducesResponseType(200)]
+        public IActionResult LoginUser(String name)
+        {
+            var tempPlayer = _repo.GetPlayerByName(name);
+            if (tempPlayer == null)
+            {
+                return Ok(tempPlayer);
+            }
+            else
+            {
+                var p = new Player
+                {
+                    Name = name,
+                    Xp = 0,
+                    NumOfCorrect = 0
+                };
+                var addedCustomer = _repo.AddPlayer(p);
+                return Ok(addedCustomer);
+            }
+            
+        }
+
+        [HttpPost]
+        [Route("corrrect")]
+        [ProducesResponseType(200)]
+        public IActionResult DoingCorrect(String name)
+        {
+
+            var player = _repo.GetPlayerByName(name);
+            if (player == null) 
+            { 
+                return NotFound();
+            }
+            else
+            {
+                player.Xp = player.Xp + 50;
+                player.NumOfCorrect = player.NumOfCorrect + 1;
+                _repo.UpdatePlayer(player);
+            }
+
+
+            return Ok();
+
+        }
+
+        [HttpPost]
+        [Route("corrrect")]
+        [ProducesResponseType(200)]
+        public IActionResult DoingWrong(String name)
+        {
+
+            var player = _repo.GetPlayerByName(name);
+            if (player == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                player.Xp = player.Xp + 10;
+                _repo.UpdatePlayer(player);
+            }
+
+
+            return Ok();
+
         }
     }
 }
