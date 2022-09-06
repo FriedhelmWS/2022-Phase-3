@@ -1,5 +1,6 @@
 ﻿using Assignment.Data;
 using Assignment.Dtos;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -65,6 +66,7 @@ namespace Assignment.Controllers
             return Created(new Uri("https://www.google.com"), "Emoji Added!");
         }
 
+        [EnableCors("AllowOrigin")]
         [HttpGet("list_players")]
         public ActionResult<IEnumerable<Player>> GetCustomers()
         {
@@ -73,6 +75,7 @@ namespace Assignment.Controllers
             return Ok(c);
         }
 
+        [EnableCors("AllowOrigin")]
         [HttpGet]
         [Route("login")]
         [ProducesResponseType(200)]
@@ -97,6 +100,7 @@ namespace Assignment.Controllers
             
         }
 
+        [EnableCors("AllowOrigin")]
         [HttpPost]
         [Route("corrrect")]
         [ProducesResponseType(200)]
@@ -120,6 +124,7 @@ namespace Assignment.Controllers
 
         }
 
+        [EnableCors("AllowOrigin")]
         [HttpPost]
         [Route("wrong")]
         [ProducesResponseType(200)]
