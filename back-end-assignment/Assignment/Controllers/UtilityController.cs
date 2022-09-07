@@ -70,9 +70,9 @@ namespace Assignment.Controllers
         [HttpGet("list_players")]
         public ActionResult<IEnumerable<Player>> GetCustomers()
         {
-            // var res = _repo.GetPlayers();
-            // var c = res.Select(e => new PlayerOutDto { Id = e.Id, Name = e.Name, Xp = e.Xp });
-            return Ok();
+            var res = _repo.GetPlayers();
+            var c = res.Select(e => new PlayerOutDto { Id = e.Id, Name = e.Name, Xp = e.Xp });
+            return Ok(c);
         }
 
         [EnableCors("AllowOrigin")]
