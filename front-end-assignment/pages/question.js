@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import axios from "axios";
 import { useStore, useSelector } from "react-redux";
+import arrayShuffle from "array-shuffle";
 
 const answers = [
   "USA",
@@ -168,6 +169,116 @@ export default function QuestionPage() {
     );
   }
 
+  const options = [];
+
+  options.push(
+    <button
+      className="hover:opacity-75"
+      onClick={() => {
+        axios.post(
+          "https://msa-2022-owen.azurewebsites.net/Utility/corrrect?name=" +
+            store.getState().name
+        );
+        var newxp = xp;
+        const add = 50;
+        const interval = setInterval(() => {
+          if (newxp < xp + add) {
+            newxp = newxp + 1;
+            store.dispatch({
+              type: "system/setXp",
+              payload: newxp,
+            });
+          } else {
+            clearInterval(interval);
+          }
+        }, 20);
+        store.dispatch({
+          type: "system/answerCorrect",
+        });
+        store.dispatch({
+          type: "system/setNumOfCorrect",
+          payload: store.getState().numOfCorrect + 1,
+        });
+      }}
+    >
+      {questionType === 1 ? (
+        <img className="h-48 border" src={question[0]} />
+      ) : (
+        <div className="hover:animate-pulse">{question[0]}</div>
+      )}
+    </button>
+  );
+
+  options.push(
+    <button
+      className="hover:opacity-75"
+      onClick={() => {
+        axios.post(
+          "https://msa-2022-owen.azurewebsites.net/Utility/wrong?name=" +
+            store.getState().name
+        );
+        var newxp = xp;
+        const add = 10;
+        const interval = setInterval(() => {
+          if (newxp < xp + add) {
+            newxp = newxp + 1;
+            store.dispatch({
+              type: "system/setXp",
+              payload: newxp,
+            });
+          } else {
+            clearInterval(interval);
+          }
+        }, 20);
+        store.dispatch({
+          type: "system/answerWrong",
+        });
+      }}
+    >
+      {questionType === 1 ? (
+        <img className="h-48 border" src={question[1]} />
+      ) : (
+        <div className="hover:animate-pulse">{question[1]}</div>
+      )}
+    </button>
+  );
+
+  options.push(
+    <button
+      className="hover:opacity-75"
+      onClick={() => {
+        axios.post(
+          "https://msa-2022-owen.azurewebsites.net/Utility/wrong?name=" +
+            store.getState().name
+        );
+        var newxp = xp;
+        const add = 10;
+        const interval = setInterval(() => {
+          if (newxp < xp + add) {
+            newxp = newxp + 1;
+            store.dispatch({
+              type: "system/setXp",
+              payload: newxp,
+            });
+          } else {
+            clearInterval(interval);
+          }
+        }, 20);
+        store.dispatch({
+          type: "system/answerWrong",
+        });
+      }}
+    >
+      {questionType === 1 ? (
+        <img className="h-48 border" src={question[2]} />
+      ) : (
+        <div className="hover:animate-pulse">{question[2]}</div>
+      )}
+    </button>
+  );
+
+  const shuffledOptions = arrayShuffle(options);
+
   return (
     <div>
       {question.length === 0 ? (
@@ -185,103 +296,7 @@ export default function QuestionPage() {
             {answerString}?
           </div>
           <div className="grid justify-center grid-cols-1 gap-5 mt-10 md:grid-cols-3">
-            <button
-              className="hover:opacity-75"
-              onClick={() => {
-                axios.post(
-                  "https://msa-2022-owen.azurewebsites.net/Utility/corrrect?name=" +
-                    store.getState().name
-                );
-                var newxp = xp;
-                const add = 50;
-                const interval = setInterval(() => {
-                  if (newxp < xp + add) {
-                    newxp = newxp + 1;
-                    store.dispatch({
-                      type: "system/setXp",
-                      payload: newxp,
-                    });
-                  } else {
-                    clearInterval(interval);
-                  }
-                }, 20);
-                store.dispatch({
-                  type: "system/answerCorrect",
-                });
-                store.dispatch({
-                  type: "system/setNumOfCorrect",
-                  payload: store.getState().numOfCorrect + 1,
-                });
-              }}
-            >
-              {questionType === 1 ? (
-                <img className="h-48 border" src={question[0]} />
-              ) : (
-                <div className="hover:animate-pulse">{question[0]}</div>
-              )}
-            </button>
-            <button
-              className="hover:opacity-75"
-              onClick={() => {
-                axios.post(
-                  "https://msa-2022-owen.azurewebsites.net/Utility/wrong?name=" +
-                    store.getState().name
-                );
-                var newxp = xp;
-                const add = 10;
-                const interval = setInterval(() => {
-                  if (newxp < xp + add) {
-                    newxp = newxp + 1;
-                    store.dispatch({
-                      type: "system/setXp",
-                      payload: newxp,
-                    });
-                  } else {
-                    clearInterval(interval);
-                  }
-                }, 20);
-                store.dispatch({
-                  type: "system/answerWrong",
-                });
-              }}
-            >
-              {questionType === 1 ? (
-                <img className="h-48 border" src={question[1]} />
-              ) : (
-                <div className="hover:animate-pulse">{question[1]}</div>
-              )}
-            </button>
-            <button
-              className="hover:opacity-75"
-              onClick={() => {
-                axios.post(
-                  "https://msa-2022-owen.azurewebsites.net/Utility/wrong?name=" +
-                    store.getState().name
-                );
-                var newxp = xp;
-                const add = 10;
-                const interval = setInterval(() => {
-                  if (newxp < xp + add) {
-                    newxp = newxp + 1;
-                    store.dispatch({
-                      type: "system/setXp",
-                      payload: newxp,
-                    });
-                  } else {
-                    clearInterval(interval);
-                  }
-                }, 20);
-                store.dispatch({
-                  type: "system/answerWrong",
-                });
-              }}
-            >
-              {questionType === 1 ? (
-                <img className="h-48 border" src={question[2]} />
-              ) : (
-                <div className="hover:animate-pulse">{question[2]}</div>
-              )}
-            </button>
+            {shuffledOptions}
           </div>
         </div>
       )}
