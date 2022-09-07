@@ -10,6 +10,7 @@ const globalSlice = createSlice({
     answer: "",
     correct: null,
     xp: 0,
+    numOfCorrect: 0,
   },
   reducers: {
     addName: (state, action) => {
@@ -41,6 +42,9 @@ const globalSlice = createSlice({
     },
     setXp: (state, action) => {
       state.xp = action.payload;
+    },
+    setNumOfCorrect: (state, action) => {
+      state.numOfCorrect = action.payload;
     },
   },
 });

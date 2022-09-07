@@ -94,14 +94,49 @@ export default function QuestionPage() {
   const question = useSelector((state) => state.question);
   const answerString = useSelector((state) => state.answer);
 
+  const xp = useSelector((state) => state.xp);
+  const progress = ((xp % 100) / 100) * 127;
+
   if (isCorrect !== null) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
         <div className="text-2xl font-bold ">
+          <div className="flex flex-row items-center justify-center gap-5 font-bold text-gray-800">
+            <div className="flex justify-center">
+              Level {parseInt(xp / 100)}
+            </div>
+            <div className="flex flex-row items-center justify-center">
+              <div className="absolute w-3 h-3 mr-32 transform rotate-45 bg-yellow-500" />
+              <div style={{ height: 17 }} className="w-32 bg-gray-200" />
+              <div
+                style={{ height: 17 }}
+                className="absolute flex flex-row w-32"
+              >
+                <div
+                  style={{ height: 17, width: progress }}
+                  className="absolute flex flex-row items-center justify-start bg-yellow-500"
+                >
+                  <div
+                    style={{ marginLeft: progress - 6 }}
+                    className="absolute z-40 w-3 h-3 transform rotate-45 bg-yellow-500"
+                  />
+                </div>
+              </div>
+              <div className="absolute w-3 h-3 ml-32 transform rotate-45 bg-gray-200" />
+            </div>
+            <div className="flex justify-center">
+              {xp}/{parseInt(xp / 100) + 1}00
+            </div>
+          </div>
           {isCorrect === true ? (
-            <div className="grid grid-cols-1 gap-2 text-center md:grid-cols-2">
-              <div>Congratulations!</div>
-              <div>You are correct!</div>
+            <div className="grid grid-cols-1 gap-2 text-center">
+              <div className="flex flex-col items-center justify-center">
+                <div>Congratulations! You are correct!</div>
+                <div>
+                  You answered {store.getState().numOfCorrect} question
+                  correctly!
+                </div>
+              </div>
             </div>
           ) : (
             <div className="grid grid-cols-1 gap-2 text-center md:grid-cols-2">
@@ -143,7 +178,7 @@ export default function QuestionPage() {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center h-screen">
-          <div className="text-3xl">
+          <div className="text-3xl text-center">
             {questionType === 1
               ? "What flag is for"
               : "What is the captial of "}{" "}
@@ -152,11 +187,32 @@ export default function QuestionPage() {
           <div className="grid justify-center grid-cols-1 gap-5 mt-10 md:grid-cols-3">
             <button
               className="hover:opacity-75"
-              onClick={() =>
+              onClick={() => {
+                axios.post(
+                  "https://msa-2022-owen.azurewebsites.net/Utility/corrrect?name=" +
+                    store.getState().name
+                );
+                var newxp = xp;
+                const add = 50;
+                const interval = setInterval(() => {
+                  if (newxp < xp + add) {
+                    newxp = newxp + 1;
+                    store.dispatch({
+                      type: "system/setXp",
+                      payload: newxp,
+                    });
+                  } else {
+                    clearInterval(interval);
+                  }
+                }, 20);
                 store.dispatch({
                   type: "system/answerCorrect",
-                })
-              }
+                });
+                store.dispatch({
+                  type: "system/setNumOfCorrect",
+                  payload: store.getState().numOfCorrect + 1,
+                });
+              }}
             >
               {questionType === 1 ? (
                 <img className="h-48 border" src={question[0]} />
@@ -166,11 +222,28 @@ export default function QuestionPage() {
             </button>
             <button
               className="hover:opacity-75"
-              onClick={() =>
+              onClick={() => {
+                axios.post(
+                  "https://msa-2022-owen.azurewebsites.net/Utility/wrong?name=" +
+                    store.getState().name
+                );
+                var newxp = xp;
+                const add = 10;
+                const interval = setInterval(() => {
+                  if (newxp < xp + add) {
+                    newxp = newxp + 1;
+                    store.dispatch({
+                      type: "system/setXp",
+                      payload: newxp,
+                    });
+                  } else {
+                    clearInterval(interval);
+                  }
+                }, 20);
                 store.dispatch({
                   type: "system/answerWrong",
-                })
-              }
+                });
+              }}
             >
               {questionType === 1 ? (
                 <img className="h-48 border" src={question[1]} />
@@ -180,11 +253,28 @@ export default function QuestionPage() {
             </button>
             <button
               className="hover:opacity-75"
-              onClick={() =>
+              onClick={() => {
+                axios.post(
+                  "https://msa-2022-owen.azurewebsites.net/Utility/wrong?name=" +
+                    store.getState().name
+                );
+                var newxp = xp;
+                const add = 10;
+                const interval = setInterval(() => {
+                  if (newxp < xp + add) {
+                    newxp = newxp + 1;
+                    store.dispatch({
+                      type: "system/setXp",
+                      payload: newxp,
+                    });
+                  } else {
+                    clearInterval(interval);
+                  }
+                }, 20);
                 store.dispatch({
                   type: "system/answerWrong",
-                })
-              }
+                });
+              }}
             >
               {questionType === 1 ? (
                 <img className="h-48 border" src={question[2]} />

@@ -29,22 +29,22 @@ export default function Home() {
         <div className="flex justify-center mt-5">
           <button
             onClick={() => {
-              router.push("/category");
               axios
                 .get(
-                  "https://msa-2022-owen.azurewebsites.net/weatherforecast",
-                  {
-                    header: {
-                      "Access-Control-Allow-Headers": "*",
-                      "Access-Control-Allow-Origin": "*",
-                      "Access-Control-Allow-Methods": "*",
-                    },
-
-                    // put the rest of your config here
-                  }
+                  "https://msa-2022-owen.azurewebsites.net/Utility/login?name=" +
+                    store.getState().name
                 )
                 .then(function (response) {
                   console.log(response);
+                  store.dispatch({
+                    type: "system/setXp",
+                    payload: response.data.xp,
+                  });
+                  store.dispatch({
+                    type: "system/setNumOfCorrect",
+                    payload: response.data.numOfCorrect,
+                  });
+                  router.push("/category");
                 });
             }}
             className="absolute z-40 px-6 py-3 text-xl font-semibold text-white bg-gray-500 rounded-lg shadow-inner hover:mt-1 active:mt-2"

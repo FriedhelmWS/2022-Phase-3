@@ -28,10 +28,9 @@ export default function CategoryPage() {
       <div className="mb-5 text-2xl font-bold text-center text-gray-800">
         Hello, {store.getState().name}! Please select a question category
       </div>
+      <div className="mb-2 text-lg font-bold">My Progress: </div>
       <div className="flex flex-row items-center justify-center gap-5 font-bold text-gray-800">
-        <div className="flex justify-center">
-          My Progress: Level {parseInt(xp / 100)}
-        </div>
+        <div className="flex justify-center">Level {parseInt(xp / 100)}</div>
         <div className="flex flex-row items-center justify-center">
           <div className="absolute w-3 h-3 mr-32 transform rotate-45 bg-yellow-500" />
           <div style={{ height: 17 }} className="w-32 bg-gray-200" />

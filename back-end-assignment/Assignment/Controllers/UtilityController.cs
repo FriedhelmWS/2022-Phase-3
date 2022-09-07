@@ -82,7 +82,7 @@ namespace Assignment.Controllers
         public IActionResult LoginUser(String name)
         {
             var tempPlayer = _repo.GetPlayerByName(name);
-            if (tempPlayer == null)
+            if (tempPlayer != null)
             {
                 return Ok(tempPlayer);
             }
