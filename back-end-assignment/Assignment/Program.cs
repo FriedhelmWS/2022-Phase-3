@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<WebAPIDBContext>(options =>
-            options.UseSqlite("Data Source=MyDatabase.sqlite"));
+            options.UseSqlite("Data Source=.\\MyDatabase.sqlite"));
 builder.Services.AddScoped<IWebAPIRepo, DBWebAPIRepo>();
 
 
