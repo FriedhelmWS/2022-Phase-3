@@ -1,5 +1,6 @@
 ﻿using Assignment.Data;
 using Assignment.Dtos;
+using FluentAssertions;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -68,7 +69,7 @@ namespace Assignment.Controllers
 
         [EnableCors("AllowOrigin")]
         [HttpGet("list_players")]
-        public ActionResult<IEnumerable<Player>> GetCustomers()
+        public ActionResult<IEnumerable<Player>> GetPlayers()
         {
             var res = _repo.GetPlayers();
             var c = res.Select(e => new PlayerOutDto { Id = e.Id, Name = e.Name, Xp = e.Xp });
@@ -81,6 +82,10 @@ namespace Assignment.Controllers
         [ProducesResponseType(200)]
         public IActionResult LoginUser(String name)
         {
+            name.Should().NotBeNull();
+            name.Should().NotBeEmpty("name should not be empty");
+            name.Should().NotBeNullOrWhiteSpace();
+            
             var tempPlayer = _repo.GetPlayerByName(name);
             if (tempPlayer != null)
             {
@@ -107,6 +112,10 @@ namespace Assignment.Controllers
         public IActionResult DoingCorrect(String name)
         {
 
+            name.Should().NotBeNull();
+            name.Should().NotBeEmpty("name should not be empty");
+            name.Should().NotBeNullOrWhiteSpace();
+
             var player = _repo.GetPlayerByName(name);
             if (player == null) 
             { 
@@ -130,6 +139,10 @@ namespace Assignment.Controllers
         [ProducesResponseType(200)]
         public IActionResult DoingWrong(String name)
         {
+
+            name.Should().NotBeNull();
+            name.Should().NotBeEmpty("name should not be empty");
+            name.Should().NotBeNullOrWhiteSpace();
 
             var player = _repo.GetPlayerByName(name);
             if (player == null)
